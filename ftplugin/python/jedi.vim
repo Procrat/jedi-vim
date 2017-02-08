@@ -1,12 +1,8 @@
-if !jedi#init_python()
-    finish
-endif
-" ------------------------------------------------------------------------
-" Initialization of jedi-vim
-" ------------------------------------------------------------------------
-
 if g:jedi#auto_initialization
-    " goto / get_definition / usages
+    if !jedi#init_python()
+        finish
+    endif
+
     if len(g:jedi#goto_command)
         execute 'nnoremap <buffer> '.g:jedi#goto_command.' :call jedi#goto()<CR>'
     endif

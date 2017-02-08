@@ -1,8 +1,8 @@
-if !jedi#init_python()
-    finish
-endif
-
 if g:jedi#auto_initialization
+    if !jedi#init_python()
+        finish
+    endif
+
     if g:jedi#completions_enabled
         " We need our own omnifunc, so this overrides the omnifunc set by
         " $VIMRUNTIME/ftplugin/python.vim.
