@@ -1,28 +1,37 @@
+nnoremap          <buffer> <Plug>JediGoto             :call jedi#goto()<CR>
+nnoremap          <buffer> <Plug>JediGotoAssignments  :call jedi#goto_assignments()<CR>
+nnoremap          <buffer> <Plug>JediGotoDefinitions  :call jedi#goto_definitions()<CR>
+nnoremap          <buffer> <Plug>JediUsages           :call jedi#usages()<CR>
+nnoremap          <buffer> <Plug>JediRename           :call jedi#rename()<CR>
+vnoremap          <buffer> <Plug>JediRenameVisual     :call jedi#rename_visual()<CR>
+nnoremap <silent> <buffer> <Plug>JediDocumentation    :call jedi#show_documentation()<CR>
+inoremap          <buffer> <Plug>JediCompleteString   <C-r>=jedi#complete_string(1)<CR>
+inoremap <silent> <buffer> <Plug>JediSmartAutoMapping <C-r>=jedi#smart_auto_mappings()<CR>
+
+
 if g:jedi#auto_initialization
     if !jedi#init_python()
         finish
     endif
 
     if len(g:jedi#goto_command)
-        execute 'nnoremap <buffer> '.g:jedi#goto_command.' :call jedi#goto()<CR>'
+        execute 'nmap <buffer> '.g:jedi#goto_command.' <Plug>JediGoto'
     endif
     if len(g:jedi#goto_assignments_command)
-        execute 'nnoremap <buffer> '.g:jedi#goto_assignments_command.' :call jedi#goto_assignments()<CR>'
+        execute 'nmap <buffer> '.g:jedi#goto_assignments_command.' <Plug>JediGotoAssignments'
     endif
     if len(g:jedi#goto_definitions_command)
-        execute 'nnoremap <buffer> '.g:jedi#goto_definitions_command.' :call jedi#goto_definitions()<CR>'
+        execute 'nmap <buffer> '.g:jedi#goto_definitions_command.' <Plug>JediGotoDefinitions'
     endif
     if len(g:jedi#usages_command)
-        execute 'nnoremap <buffer> '.g:jedi#usages_command.' :call jedi#usages()<CR>'
+        execute 'nmap <buffer> '.g:jedi#usages_command.' <Plug>JediUsages'
     endif
-    " rename
     if len(g:jedi#rename_command)
-        execute 'nnoremap <buffer> '.g:jedi#rename_command.' :call jedi#rename()<CR>'
-        execute 'vnoremap <buffer> '.g:jedi#rename_command.' :call jedi#rename_visual()<CR>'
+        execute 'nmap <buffer> '.g:jedi#rename_command.' <Plug>JediRename'
+        execute 'vmap <buffer> '.g:jedi#rename_command.' <Plug>JediRenameVisual'
     endif
-    " documentation/pydoc
     if len(g:jedi#documentation_command)
-        execute 'nnoremap <silent> <buffer>'.g:jedi#documentation_command.' :call jedi#show_documentation()<CR>'
+        execute 'nmap <buffer>'.g:jedi#documentation_command.' <Plug>JediDocumentation'
     endif
 
     if g:jedi#show_call_signatures > 0 && has('conceal')
@@ -30,11 +39,11 @@ if g:jedi#auto_initialization
     endif
 
     if g:jedi#completions_enabled == 1
-        inoremap <silent> <buffer> . .<C-R>=jedi#complete_string(1)<CR>
+        imap <buffer> . .<Plug>JediCompleteString
     endif
 
     if g:jedi#smart_auto_mappings == 1
-        inoremap <silent> <buffer> <space> <C-R>=jedi#smart_auto_mappings()<CR>
+        imap <buffer> <space> <Plug>JediSmartAutoMapping
     end
 
     if g:jedi#auto_close_doc
